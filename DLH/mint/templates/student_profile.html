@@ -1,0 +1,52 @@
+{% extends 'head.html' %}
+
+{% block title %}Your Meetups{% endblock %}
+
+{% block content %}
+<div id="profilemain">
+    <div id="r1c1">
+        <center><h2>💐🌷Welcome, {{ student.student_email }}!🍂🍁</h2></center>
+        
+        <!-- Logout Button -->
+        
+        <h3>Your Registered Meetups:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Meetup Name</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+    </div>
+
+    <div id="r2c1">
+        {% for X in registrations %}
+            <tr>
+                <td>{{ X.meetup.meetup_name }}</td>
+                <td>{{ X.meetup.meetup_location }}</td>
+                <td>{{ X.meetup.meetup_date }}</td>
+                <td>{{ X.get_status_display }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4">You have not registered for any meetups yet.</td>
+            </tr>
+        {% endfor %}
+            </tbody>
+           
+        </table>
+        <center>
+            <form method="post" action="{% url 'logout' %}" onclick="return confirm('you sure want to logout?')" style="float: right;">
+                {% csrf_token %}
+                <button type="submit" style="background-color: #6a8a6b; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                    Logout
+                </button>
+            </form>
+        </center>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,405 @@
+<!-- base.html -->
+{%load static%}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Manage Meetups{% endblock %}</title>
+    <style>
+        body, html {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #6a8a6b;  /* Original color */
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  /* Add shadow for modern look */
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;  /* Subtle border to separate rows */
+        }
+
+        th {
+            background-color: #6a8a6b;  /* Original color for header */
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+ 
+
+
+        .action-links a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            height: 100%;
+            background-color: #6a8a6b;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+         
+
+        .action-links a:hover {
+            background-color: #568559;  /* Darken the button color on hover */
+        }
+
+        .action-links a.delete {
+            background-color: #e74c3c;
+        }
+
+        .action-links a.delete:hover {
+            background-color: #c0392b;
+        }
+        /* Add this for the meetup image to fix its size */
+.meetup-img {
+    max-width: 150px; /* Define a fixed width for the image */
+    border-radius: 10px; /* Optional: to make the image corners rounded */
+}
+
+/* Wrap the text description and image using flexbox */
+.meetup-details {
+    display: flex;
+    align-items: flex-start; /* Align the items at the top */
+    gap: 20px; /* Add some space between the image and the text */
+}
+
+/* Ensure the table doesn't stretch unnecessarily */
+table th, table td {
+    vertical-align: top; /* Align the content at the top */
+}
+
+/* Adjust the button sizes and ensure they don't stretch too much */
+.action-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-links a {
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    text-align: center; /* Ensure buttons text is centered */
+}
+
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            background-color: #6a8a6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .button:hover {
+            background-color: #568559;
+        }
+
+        ul.messages {
+            list-style-type: none;
+            padding: 10px;
+            margin: 0 0 20px 0;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        ul.messages li {
+            padding: 10px;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        ul.messages li.success {
+            background-color: #2ecc71;
+            color: white;
+        }
+        form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for a modern look */
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    input[type="text"], input[type="date"], input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus, input[type="date"]:focus, input[type="file"]:focus {
+        border-color: #6a8a6b; /* Original theme color on focus */
+    }
+
+    .button {
+        width: 100%;
+    
+        background-color: #6a8a6b; /* Original theme color */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+        background-color: #568559; /* Darken the button on hover */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+        form {
+            padding: 15px;
+        }
+
+        input[type="text"], input[type="date"], input[type="file"] {
+            padding: 8px;
+        }
+
+        .button {
+            padding: 12px;
+        }
+    }
+    /* Styling the student list */
+ul.student-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+li.student-item {
+    display: flex;
+    justify-content: space-between; /* Align student info left and buttons right */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+li.student-item.even {
+    background-color: #f9f9f9; /* Lighter background for even rows */
+}
+
+li.student-item.odd {
+    background-color: #ffffff; /* White background for odd rows */
+}
+
+.student-info {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.student-actions {
+    text-align: right;
+}
+
+.student-actions .button {
+    margin-left: 10px; /* Space between the approve and reject buttons */
+    width: auto;
+    
+    font-size: 14px;
+}
+
+.student-actions .button.approve-btn {
+    background-color: #6a8a6b; /* Original theme color */
+}
+
+.student-actions .button.approve-btn:hover {
+    background-color: #568559;
+}
+
+.student-actions, .button.reject-btn {
+    background-color: #e74c3c;
+}
+
+.student-actions, .button.reject-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Improving the look of the main table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Shadow for a modern look */
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Subtle border to separate rows */
+}
+
+th {
+    background-color: #6a8a6b; /* Original theme color for header */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+.action-links a {
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+.action-links {
+    display: flex;
+    flex-direction: column; /* Stack the buttons vertically */
+}
+
+.action-links a {
+    text-decoration: none;
+    padding: 10px 15px; /* Set consistent padding for all buttons */
+    border-radius: 5px;
+    background-color: #6a8a6b;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    width: 100px; /* Set a fixed width for all buttons */
+    text-align: center; /* Center the text inside the button */
+    margin-bottom: 10px; /* Space between the buttons */
+    transition: background-color 0.3s ease;
+}
+
+.action-links a:hover {
+    background-color: #568559; /* Darken the button color on hover */
+}
+
+.action-links a.delete {
+    background-color: #e74c3c;
+}
+
+.action-links a.delete:hover {
+    background-color: #c0392b;
+}
+
+.tajuk{font-size: 20px; text-align: center; text-indent: 2px;}
+
+body {
+  background-image: url("{%static 'media/12.jpeg'%}");
+  background-size: cover; /* Adjusts the image to cover the entire background */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-position: center center; /* Centers the image */
+}
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HOE DOWN!</h1>
+        <p>Wisteria Gardens</p>
+        <center><hr width="50%"></center>
+        <nav>
+            <ul>
+                <LI><a href="{% url 'home'%}">Homepage</a></LI>
+                <li><a href="{% url 'manage_meetup' %}">All Meetups</a></li>
+                <li><a href="{% url 'add_meetup' %}">Add New Meetup</a></li>
+                
+            </ul>
+        </nav>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

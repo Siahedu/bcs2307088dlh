@@ -1,0 +1,28 @@
+<!-- add_meetup.html -->
+{% extends 'base.html' %}
+
+{% block title %}Add Meetup{% endblock %}
+
+
+{% block content %}
+<center><h2 style="margin-bottom: 20px; border: 20px, solid, white; background-color: white; border-radius: 20px;">Add a new meetup</h2></center>
+<form method="post" enctype="multipart/form-data" action="{% url 'add_meetup' %}">
+    {% csrf_token %}
+    <label for="meetup_name">Meetup Name:</label><br>
+    <input type="text" name="meetup_name" id="meetup_name" required><br>
+
+    <label for="meetup_description">Description:</label><br>
+    <input type="text" name="meetup_description" id="meetup_description" required><br>
+
+    <label for="meetup_date">Date:</label><br>
+    <input type="date" name="meetup_date" id="meetup_date" required><br>
+
+    <label for="meetup_location">Location:</label><br>
+    <input type="text" name="meetup_location" id="meetup_location" required><br>
+
+    <label for="meetup_poster">Meetup Poster:</label><br>
+    <input type="file" name="meetup_poster" id="meetup_poster"><br><br>
+
+    <input type="submit" class="button approve-btn" value="Add Meetup">
+</form>
+{% endblock %}

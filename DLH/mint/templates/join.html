@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - KPMB Landscape & Horticulture Meetup Clique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+  background-image: url("{%static 'media/6.jpeg'%}");
+  background-size: cover; /* Adjusts the image to cover the entire background */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-position: center center; /* Centers the image */
+}
+
+
+        body, html {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            
+        }
+
+        header {
+            background: #6a8a6b;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            height: 150px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        #logo {
+            width: 100px; 
+            height: 100px; 
+            float: left;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 150px auto;  /* Added margin to avoid header overlap */
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #6a8a6b;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #557f5d;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .signup-link a {
+            color: #6a8a6b;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HOE DOWN!</h1>
+        <p>Wisteria Gardens</p>
+        <center><hr width="50%"></center>
+        <nav>
+            <ul>
+                <li><a href="{%url 'home'%}">Homepage</a></li>
+                <li><a href="{% url 'home' %}#about">About Us</a></li>
+                <li><a href="{% url 'home'%}#meetups">Meetups</a></li>
+                <li><a href="{% url 'join' %}">Join Us</a></li>
+                <li><a href="{% url 'home' %}#contact">Contact</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Student ID:</label>
+                <input type="text" name="student_id" id="name" placeholder="Enter your ID" required>
+            </div>
+
+            <div class="form-group">
+                <label for="student_email">Email:</label>
+                <input type="email" name="student_email" id="student_email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="student_password">Password:</label>
+                <input type="password" name="student_password" id="student_password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="student_phone">Phone Number:</label>
+                <input type="text" name="student_phone" id="student_phone" placeholder="Enter your phone number" required>
+            </div>
+
+            <input type="submit" value="Sign Up">
+            <div class="signup-link">
+            <p>Already have an account? <a href="{% url 'login' %}">login</a></p>
+            </div>
+        </form>
+
+        <p>{{ message }}</p>
+    </div>
+
+        <!-- Footer Section -->
+<footer style="background-color: #6a8a6b; padding: 20px 0; text-align: center; color: white; font-family: Arial, sans-serif;">
+    <div style="max-width: 900px; margin: 0 auto;">
+        <!-- Contact Us -->
+        <p id="contact" style="font-size: 16px; font-weight: bold; margin: 0;">Contact Us</p>
+        <p style="margin: 5px 0;">Email: <a href="mailto:info@landscapemeetup.com" style="color: #ffeb3b; text-decoration: none;">info@landscapemeetup.com</a></p>
+        
+        <!-- Copyright Section -->
+        <hr style="border: 0; height: 1px; background: #ffffff; margin: 15px auto; width: 80%; opacity: 0.4;">
+        <p style="font-size: 14px; margin: 0;">© 2024 Landscape & Horticulture Meetup Clique. All rights reserved.</p>
+        <p style="font-size: 12px; margin-top: 5px; color: #c8e6c9;">Website by <a href="https://www.yourwebsite.com" style="color: #ffeb3b; text-decoration: none;">IMAN SLAY</a></p>
+    </div>
+</footer>
+
+</body>
+</html>

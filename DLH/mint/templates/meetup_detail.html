@@ -1,0 +1,98 @@
+<!-- manage_meetups.html -->
+{% extends 'head.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<div id="back">
+        <div class="col">
+            <h1>{{ meetup.meetup_name }}</h1>
+            <p><b>Date:</b> {{ meetup.meetup_date }}</p>
+            <p><b>Location:</b> {{ meetup.meetup_location }}</p>
+            <br>
+            <p>{{ meetup.meetup_description }}</p>
+            
+<br><br>
+        
+            <!-- Meetup Registration Section -->
+<!-- Meetup Registration Section -->
+<div class="form-container">
+    <h2 class="section-header">Join this Meetup</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="register_meetup" value="1">
+        <br>
+        <button class="custom-button" type="submit">Join Meetup</button>
+    </form>
+    
+</div>
+{% if messages %}
+    <div class="message-container">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+<br><br><br>
+
+
+
+<!-- Comment Section: Show this only if a student is logged in -->
+{% if current_student_id %}
+<div class="form-container">
+    <h2 class="section-header">Leave a Comment</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="comment_text" placeholder="Write your comment here..." required></textarea>
+        <input type="hidden" name="submit_comment" value="1">
+        <button class="custom-button" type="submit">Submit Comment</button>
+    </form>
+</div>
+{% else %}
+    <!-- Message for staff members who can't leave comments -->
+    <p><strong>Only students can leave comments on this meetup.</strong></p>
+{% endif %}
+
+<!-- Display Existing Comments -->
+<div class="comment-list">
+    <h2>Comments:</h2>
+    {% for comment in comments %}
+        <div class="comment-item">
+            <p><strong>{{ comment.student.student_email }}:</strong></p>
+            <p>{{ comment.comment_text }}</p>
+            <p><em>{{ comment.comment_created_time }}</em></p>
+
+            <!-- Only show the delete button if the logged-in student matches the comment's student -->
+            {% if comment.student.student_id == current_student_id %}
+            <form method="POST" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
+                <input type="hidden" name="delete_comment" value="1">
+                <button type="submit" onclick="return confirm('you sure want to delete comment?')">Delete</button>
+            </form>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No comments yet. Be the first to comment!</p>
+    {% endfor %}
+</div>
+
+        </div>
+
+        <div class="col">
+            {% if meetup.meetup_poster %}
+                <img src="{{ meetup.meetup_poster.url }}" alt="Meetup Poster">
+            {% else %}
+                <p>No poster available for this meetup.</p>
+            {% endif %}
+        </div>
+</div>
+<br><br>
+{% endblock %}
+
+
+
+
+
+
+

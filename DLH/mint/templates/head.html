@@ -1,0 +1,413 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>    /* General page styling */
+  
+
+    header {
+        background: #6a8a6b;
+        color: white;
+        /* padding: 10px 0; */
+        text-align: center;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    main {
+        padding: 10px;
+        margin-top: 50px;
+        display: flex;
+    }
+
+    .col { width: 50%; padding: 15px; }
+    img { width: 100%; }
+
+    .form-container {
+        margin-top: 0px;
+    }
+
+    .form-container select, 
+    .form-container textarea, 
+    .form-container button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* Comment and registration section */
+    .section-header {
+        margin-top: 30px;
+    }
+
+    .comment-list, .comment-item {
+        margin-top: 20px;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+    }
+
+    .comment-item p {
+        margin: 5px 0;
+    }
+
+    .message-container .alert {
+        color: green;
+    }
+     * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #6a8a6b;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            height: 150px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav, ul, li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ,ul, li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            /* margin: 150px auto; */
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #6a8a6b;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #557f5d;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .signup-link a {
+            color: #6a8a6b;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .message.error {
+            color: red;
+        }
+
+        .message.success {
+            color: green;
+        }
+
+        /* New Styles for Role Selection (Tab-like buttons) */
+        .role-selection {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .role-selection label {
+            cursor: pointer;
+            padding: 10px 30px;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            margin: 0 5px;
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+
+        .role-selection input[type="radio"] {
+            display: none;
+        }
+
+        .role-selection label:hover {
+            background-color: #ddd;
+        }
+
+        .role-selection input[type="radio"]:checked + label {
+            background-color: #6a8a6b;
+            color: white;
+        }
+
+        
+    .custom-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50; /* Green background */
+        color: white; /* White text */
+        border: none;
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
+    }
+
+    .custom-button:hover {
+        background-color: #45a049; /* Darker green on hover */
+        transform: scale(1.05); /* Slightly enlarge button on hover */
+    }
+
+    .custom-button:active {
+        transform: scale(0.98); /* Shrinks slightly when clicked */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow on click */
+    }
+    /* Base styles for the main profile area */
+#profilemain {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Header styles */
+#profilemain h2 {
+    font-size: 28px;
+    color: #2e7d32; /* Darker green to match the header */
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+}
+
+#profilemain h3 {
+    font-size: 22px;
+    color: #2e7d32; /* Match the header color */
+    margin-top: 25px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #2e7d32; /* Green header matching header color */
+    color: white;
+    font-size: 16px;
+}
+
+th {
+    padding: 15px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 16px;
+    border-bottom: 2px solid #e1e1e1;
+}
+
+tbody {
+    background-color: #f1f8e9; /* Light green for body rows */
+}
+
+td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s;
+    font-size: 15px;
+}
+
+tbody tr:hover {
+    background-color: #c8e6c9; /* Subtle green hover effect */
+}
+
+/* Empty state styles */
+tbody tr td[colspan="4"] {
+    text-align: center;
+    color: #95a5a6;
+    font-style: italic;
+}
+
+/* Status styles */
+td.status-active {
+    color: #43a047; /* Green for active */
+}
+
+td.status-pending {
+    color: #fbc02d; /* Yellow for pending */
+}
+
+td.status-cancelled {
+    color: #e53935; /* Red for cancelled */
+}
+
+/* Button styles */
+button {
+    background-color: #2e7d32; /* Green button matching header */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 25px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #1b5e20;
+    transform: translateY(-3px); /* Slight lift effect */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    #profilemain {
+        padding: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    #profilemain h2 {
+        font-size: 24px;
+    }
+
+    #profilemain h3 {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+#head,a{text-decoration: none; color: white;}
+body {
+  background-image: url("{%static 'media/10.jpeg'%}");
+  background-size: cover; /* Adjusts the image to cover the entire background */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-position: center center; /* Centers the image */
+  
+}
+
+#back {
+    background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
+    padding: 20px;
+    display: flex;
+    border-radius: 20px;
+}
+
+
+
+
+
+</style>
+<body>
+    <header>
+        <a href="{% url 'home'%}"><h1 id="head">HOE DOWN!</h1></a>
+        <p>Wisteria Gardens</p>
+        <center><hr width="50%"></center>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home'%}">Homepage</a></li>
+                <li><a href="{% url 'home'%}#about">About Us</a></li>
+                <li><a href="{% url 'home'%}#meetups">Meetups</a></li>
+                <li><a href="{% url 'join' %}">Join Us</a></li>  <!-- Corrected link -->
+                <li><a href="{% url 'home' %}#contact">Contact</a></li>
+                <li><a href="{%url 'login' %}"></a></li>
+            </ul>
+        </nav>
+      
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+        <br><br>
+    </main> <!-- Footer Section -->
+    <footer style="background-color: #6a8a6b; padding: 20px 0; text-align: center; color: white; font-family: Arial, sans-serif;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <!-- Contact Us -->
+            <p id="contact" style="font-size: 16px; font-weight: bold; margin: 0;">Contact Us</p>
+            <p style="margin: 5px 0;">Email: <a href="mailto:info@landscapemeetup.com" style="color: #ffeb3b; text-decoration: none;">info@landscapemeetup.com</a></p>
+            
+            <!-- Copyright Section -->
+            <hr style="border: 0; height: 1px; background: #ffffff; margin: 15px auto; width: 80%; opacity: 0.4;">
+            <p style="font-size: 14px; margin: 0;">© 2024 Landscape & Horticulture Meetup Clique. All rights reserved.</p>
+            <p style="font-size: 12px; margin-top: 5px; color: #c8e6c9;">Website by <a href="https://www.yourwebsite.com" style="color: #ffeb3b; text-decoration: none;">IMAN SLAY</a></p>
+        </div>
+    </footer>
+    
+       
+
+    
+</body>
+</html>

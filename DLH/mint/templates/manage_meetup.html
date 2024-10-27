@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Meetups{% endblock %}
+
+{% block content %}
+
+
+<table>
+    
+    <tr>
+        <center><h2 style="margin-bottom: 20px; border: 20px, solid, white; background-color: white; border-radius: 20px;">All Meetups</h2></center>
+        <th>Meetup Name</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Location</th>
+        <th>Actions</th>
+    </tr>
+    {% for meetup in meetups %}
+    <tr>
+        <td>
+            <b class="tajuk">{{ meetup.meetup_name }}</b>
+            {% if meetup.meetup_poster %}
+                <img src="{{ meetup.meetup_poster.url }}" alt="Meetup Poster" style="width: 200px; height: auto; padding: 15px;">
+            {% else %}
+                <p>No poster available for this meetup.</p>
+            {% endif %}
+        </td>
+        <td>{{ meetup.meetup_description }}</td>
+        <td>{{ meetup.meetup_date }}</td>
+        <td>{{ meetup.meetup_location }}</td>
+        <td class="action-links">
+            <br><br><br><br><br>
+            <a href="{% url 'update_meetup' meetup.meetup_id %}">Update</a>
+            <a href="{% url 'delete_meetup' meetup.meetup_id %}" class="delete" onclick="return confirm('Are you sure you want to delete this meetup?');">Delete</a>
+            <a href="{% url 'meetup_detail' meetup.meetup_id %}">View</a>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5">
+            <strong>Registered Students:</strong>
+            <ul class="student-list">
+                {% for registration in meetup.registration_set.all %}
+                    <li class="student-item {% cycle 'odd' 'even' %}">
+                        <div class="student-info">
+                            {{ registration.student.student_id }} - {{ registration.student.student_email }} 
+                            (Status: {{ registration.get_status_display }})
+                        </div>
+                        {% if registration.status == 'pending' %}
+                        <div class="student-actions">
+                            <form method="post" action="{% url 'approve_registration' registration.registration_id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="_method" value="PUT">
+                                <button type="submit" class="button approve-btn">Approve</button>
+                            </form>
+                            <form method="post" action="{% url 'reject_registration' registration.registration_id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="_method" value="PUT">
+                                <button type="submit" class="button delete reject-btn">Reject</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li>No students registered for this meetup.</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No meetups available.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

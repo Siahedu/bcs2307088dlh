@@ -1,0 +1,33 @@
+<!-- update_meetup.html -->
+{% extends 'base.html' %}
+
+{% block title %}Update Meetup{% endblock %}
+
+{% block content %}
+
+
+<form method="post"  enctype="multipart/form-data" action="{% url 'update_meetup' meetup.meetup_id %}">
+    <center><h2>Update Meetup</h2></center>
+    {% csrf_token %}
+    
+    <!-- Simulate PUT method -->
+    <input type="hidden" name="_method" value="PUT">
+    
+    <label for="meetup_name">Meetup Name:</label><br>
+    <input type="text" name="meetup_name" id="meetup_name" value="{{ meetup.meetup_name }}" required><br>
+<br>
+    <label for="meetup_description">Description:</label><br>
+    <input type="text" name="meetup_description" id="meetup_description" value="{{ meetup.meetup_description }}" required><br>
+<br>
+    <label for="meetup_date">Date:</label><br>
+    <input type="date" name="meetup_date" id="meetup_date" value="{{ meetup.meetup_date }}" required><br>
+<br>
+    <label for="meetup_location">Location:</label><br>
+    <input type="text" name="meetup_location" id="meetup_location" value="{{ meetup.meetup_location }}" required><br>
+<br>
+    <label for="meetup_poster">Meetup Poster:</label><br>
+    <input type="file" name="meetup_poster" id="meetup_poster"><br><br>
+
+    <input class="button approve-btn" type="submit" value="Update Meetup">
+</form>
+{% endblock %}

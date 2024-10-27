@@ -1,0 +1,274 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landscape & Horticulture Meetup Clique</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+     <!-- Correct way to include static CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #6a8a6b;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: relative; /* Change to relative for layout */
+            width: 100%;
+        }
+
+        nav, ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav, ul ,li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ,ul, li, a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%; /* Ensures table takes full width */
+            margin-top: 10px;
+            border-collapse: collapse; /* Remove spacing between cells */
+        }
+
+        th, td {
+            border: none;
+            padding: 10px; /* Add padding for better spacing */
+            /* border: 1px solid #ccc; Add border to cells */
+            text-align: left; /* Align text to the left */
+        }
+        
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background:#6a8a6b;
+            color: white;
+            position: relative;
+            width: 100%;
+        }
+
+        #logo {
+            width: 100px; 
+            height: 100px; 
+            float: left;
+        }
+
+        img {
+            max-width: 100%; /* Ensure images are responsive */
+            height: auto;
+        }
+
+        #imgmeetup {
+            display: flex;
+            justify-content: center; /* Center images */
+            gap: 10px; /* Space between images */
+        }
+
+        #search {
+            display: flex;
+            justify-content: space-between; /* Space out the search elements */
+            margin-top: 20px;
+        }
+
+        .col {
+            width: 50%;
+        }
+        .search-form {
+    display: flex;  /* Aligns input and button horizontally */
+    justify-content: center;  /* Centers the search bar */
+    margin-top: 20px; /* Optional: adds spacing above the search bar */
+}
+
+.search-input {
+    padding: 10px;  /* Adds padding inside the input */
+    border: 2px solid #4CAF50;  /* Border color */
+    border-radius: 5px;  /* Rounds the corners */
+    outline: none;  /* Removes the default outline on focus */
+    width: 80%;  /* Sets a fixed width */
+    transition: border-color 0.3s ease;  /* Smooth transition for border color */
+}
+
+.search-input::placeholder {
+    color: #999;  /* Placeholder text color */
+}
+
+.search-input:focus {
+    border-color: #45a049;  /* Changes border color on focus */
+}
+
+.search-button {
+    padding: 10px 15px;  /* Adds padding inside the button */
+    background-color: #4CAF50;  /* Button background color */
+    color: white;  /* Button text color */
+    border: none;  /* Removes default border */
+    border-radius: 5px;  /* Rounds the corners */
+    cursor: pointer;  /* Changes cursor to pointer */
+    margin-left: 10px;  /* Adds space between input and button */
+    transition: background-color 0.3s ease;  /* Smooth transition for background color */
+}
+
+.search-button:hover {
+    background-color: #45a049;  /* Changes background color on hover */
+}
+
+.poster{color: black;}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HOE DOWN!</h1>
+        <p>Wisteria Gardens</p>
+        <center><hr width="50%"></center>
+        <nav>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#meetups">Meetups</a></li>
+                <li><a href="{% url 'join' %}">Join Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>  <!-- Corrected link -->
+                <li><a href="{% url 'student_profile'%}">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div>
+        <img id="header" src="{% static 'h.jpg' %}" alt="Header Image">
+    </div>
+
+    <main>
+        <form action="{% url 'home' %}#search-button" method="get">
+            
+            <center><input type="text" name="search" class="search-input" placeholder="Search for meetups">
+            <input type="submit" value="&#128269;" id="search-button" class="search-button"></center>
+        </form>
+
+        <h2 id="searchh">Search Results:</h2>
+        <div id="search">
+            <table>
+                {% if findmeetup %}
+                    {% for x in findmeetup %}
+                    <tr>
+                        <td>
+                            {% if x.meetup_poster %}
+                                <a class="poster" href="{% url 'meetup_detail' x.meetup_id %}">
+                                    <img src="{{ x.meetup_poster.url }}" alt="Meetup Poster" style="width: 400px; height: auto; padding: 15px;">
+                                </a>
+                            {% else %}
+                                <p>No poster available for this meetup.</p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <h2><a class="poster" href="{% url 'meetup_detail' x.meetup_id %}">{{ x.meetup_name }}</h2>
+                            <h3>- {{ x.meetup_date }} -</h3>
+                            <p>{{ x.meetup_description }}</p></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="2">No meetups found.</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We are a community of landscape and horticulture enthusiasts dedicated to sharing knowledge, skills, and experiences.</p>
+        </section>
+
+        <div id="imgmeetup">
+            <img src="{% static 'media/1.jpg' %}" alt="">
+            <img src="{% static 'media/2.jpg' %}" alt="">
+            <img src="{% static 'media/3.jpg' %}" alt="">
+            
+        </div>
+
+        <section id="meetups">
+            <h2>Upcoming Meetups</h2>
+            <table>
+                <tr>
+                    <th>Meetup</th>
+                    <th>Date</th>
+                </tr>
+                {% for x in displaydata %}
+                <tr>
+                    <td><a class="poster" href="{% url 'meetup_detail' x.meetup_id %}">{{ x.meetup_name }}</a></td>
+                    <td>- {{ x.meetup_date }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+
+        <section id="join">
+            <h2>Join Us</h2>
+            <a href="{% url 'join' %}">
+                <button id="join-button">Join Our Clique</button>
+            </a>
+        </section>
+
+        
+    </main>
+
+    <!-- Footer Section -->
+<footer style="background-color: #6a8a6b; padding: 20px 0; text-align: center; color: white; font-family: Arial, sans-serif;">
+    <div style="max-width: 900px; margin: 0 auto;">
+        <!-- Contact Us -->
+        <p id="contact" style="font-size: 16px; font-weight: bold; margin: 0;">Contact Us</p>
+        <p style="margin: 5px 0;">Email: <a href="mailto:info@landscapemeetup.com" style="color: #ffeb3b; text-decoration: none;">info@landscapemeetup.com</a></p>
+        
+        <!-- Copyright Section -->
+        <hr style="border: 0; height: 1px; background: #ffffff; margin: 15px auto; width: 80%; opacity: 0.4;">
+        <p style="font-size: 14px; margin: 0;">© 2024 Landscape & Horticulture Meetup Clique. All rights reserved.</p>
+        <p style="font-size: 12px; margin-top: 5px; color: #c8e6c9;">Website by <a href="https://www.yourwebsite.com" style="color: #ffeb3b; text-decoration: none;">IMAN SLAY</a></p>
+    </div>
+</footer>
+
+    <script src="{% static 'script.js' %}"></script>  <!-- Ensure you load your static JS correctly -->
+</body>
+</html>
